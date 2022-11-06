@@ -1,0 +1,22 @@
+data segment
+STRING1 DB 08h,19h,18h,2Fh,09h
+res db ?
+data ends
+code segment
+assume cs:code, ds:data
+start: mov ax, data
+mov ds, ax
+mov cx, 05h
+mov bl, 00h
+LEA SI, STRING1
+up: mov al, [SI]
+cmp al, bl
+jl nxt
+mov bl, al
+nxt:
+inc si
+dec cx
+jnz up
+mov res,bl
+code ends
+end start
