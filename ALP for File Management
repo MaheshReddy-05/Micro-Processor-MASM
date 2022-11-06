@@ -1,0 +1,32 @@
+.model
+.stack 100h
+.data
+text db "Welcome to Vellore$"
+filename db "name1.txt",0
+handler dw ?
+.code
+;initialize data segement
+START:
+mov ax, @data
+mov ds, ax
+;create file
+mov ah,3ch
+mov cx,0
+mov dx,offset filename
+int 21h
+;preserve file handler returned
+mov handler, ax
+;writing string
+mov ah,40h
+mov bx,handler
+mov cx,18
+mov dx,offset text
+int 21h
+;close file
+mov ah,3eh
+mov bx,handler
+int 21h
+;finish the program
+mov ax,4c00h
+int 21h
+END START
