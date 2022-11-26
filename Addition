@@ -1,11 +1,65 @@
-DATA SEGMENT
-DATA ENDS
-CODE SEGMENT
-ASSUME CS : CODE, DS : DATA
-MOV AX, DATA
-MOV DS, AX
-MOV AX, 4261H
-ADD AX, 1234H
-HLT
-CODE ENDS
-END
+; 8 Bit Addition
+
+data segment 
+a db 09h 
+b db 02h 
+c dw ? 
+data ends
+code segment 
+assume cs:code,ds:data 
+start: 
+mov ax,data 
+mov ds,ax 
+mov al,a 
+mov bl,b 
+add al,bl 
+mov c,ax 
+int 3 
+code ends
+end start
+
+;16 Bit Addition
+
+data segment 
+a dw 0202h 
+b dw 0408h 
+c dw ? 
+data ends
+code segment 
+assume cs:code,ds:data 
+start: mov ax,data 
+mov ds,ax 
+mov ax,a 
+mov bx,b 
+add ax,bx 
+mov c,ax 
+int 3 
+code ends
+end start
+
+;32 Bit Addition
+
+data segment 
+abc dd 12345678h 
+def dd 9ABCDEF0h 
+ghi dw ? data ends
+code segment 
+assume cs:code, ds:data 
+start: 
+mov ax,data 
+mov ds,ax 
+mov dl,00h 
+mov ax, word ptr abc 
+mov bx, word ptr def 
+add ax,bx 
+mov word ptr ghi,ax 
+mov ax, word ptr abc+2 
+mov bx, word ptr def+2 
+adc ax,bx 
+mov word ptr ghi+2,ax 
+jnc move 
+inc dl 
+move: mov byte ptr ghi+4,dl 
+int 3 
+code ends
+end start
