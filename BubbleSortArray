@@ -1,0 +1,28 @@
+data segment 
+    list dw 0634h,1987h,1765h,9876h 
+    count equ 04h 
+    data ends
+code segment
+assume cs:code,ds:data 
+start:
+    mov ax,data 
+    mov ds,ax 
+    mov cx,count-1  ; outer loop
+again0:
+    mov cx,dx 
+    lea si,list
+again1:
+    mov ax,[si] 
+    cmp ax,[si+2] 
+    jl res 
+    xchg [si+2],ax 
+    xchg ax,[si]
+res:
+    add si,02h 
+    jmp again1 
+    dec dx 
+    jnz again0 
+    mov ah,4ch 
+    int 21h
+code ends
+end start
