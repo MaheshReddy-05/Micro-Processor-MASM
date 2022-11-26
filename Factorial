@@ -1,0 +1,21 @@
+Data segment 
+    n dw 4 
+    res dw ? 
+Data ends
+Code segment 
+    assume cs:code,ds:data 
+    start:
+    mov ax,data 
+    mov ds,ax 
+    mov ax,n 
+    mov cx,ax
+    dec cx
+    loop:
+    mul cx 
+    dec cx 
+    jnz loop 
+    mov res,ax 
+    mov ah,4ch 
+    int 21h
+Code ends
+end start
