@@ -8,7 +8,7 @@ start: mov ax, data
 mov ds, ax
 mov cx, 05h
 mov bl, 79h
-LEA SI, STRING1
+LEA SI, STRING1 
 up: mov al, [SI]
 cmp al, bl
 jge nxt
