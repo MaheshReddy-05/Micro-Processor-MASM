@@ -1,18 +1,40 @@
-DATA SEGMENT
-    A DW 8844H
-    B DW 0004H 
-    C DW ?
-DATA ENDS
+; 8 Bit Division
 
-CODE SEGMENT
-    ASSUME DS:DATA, CS:CODE
-    START:
-    MOV AX,DATA
-    MOV DS,AX
-    MOV AX,A
-    MOV BX,B
-    DIV BX
-    MOV C,BX
-    INT 3
-CODE ENDS
-END START
+data segment 
+    a db 28h 
+    b db 02h 
+    c dw ? 
+data ends
+code segment 
+    assume cs:code, ds:data 
+    start: 
+    mov ax,data 
+    mov ds,ax 
+    mov ax,0000h 
+    mov bx,0000h 
+    mov al,a 
+    mov bl,b 
+    div b 
+    mov c,ax 
+    int 3 
+code ends
+end start
+
+; 16 Bit Division
+
+data segment 
+    a dw 4444h 
+    b dw 0002h 
+    c dw ? 
+data ends
+code segment 
+    assume ds:data, cs:code 
+    start: mov ax,data 
+    mov ds,ax 
+    mov ax,a 
+    mov bx,b 
+    div bx 
+    mov c,ax 
+    int 3 
+code ends
+end start
