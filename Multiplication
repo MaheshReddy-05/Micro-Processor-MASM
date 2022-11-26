@@ -1,19 +1,80 @@
-DATA SEGMENT
-A DW 0105H
-B DW 0210H
-C DW ?
-DATA ENDS
-CODE SEGMENT
-ASSUME CS:CODE, DS:DATA
-START:
-MOV AX,DATA
-MOV DS,AX
-MOV AX,0000H
-MOV BX,0000H
-MOV AX,A
-MOV BX,B
-IMUL B
-MOV C,AX
-INT 3
-CODE ENDS
-END START
+; 8 Bit Multiplication
+
+data segment 
+a db 09h 
+b db 02h 
+c dw ? 
+data ends
+code segment assume cs:code, ds:data 
+start: mov ax,data 
+mov ds,ax 
+mov ax,0000h 
+mov bx,0000h 
+mov al,a 
+mov bl,b 
+mul b 
+mov c,ax 
+int 3 
+code ends
+end start
+
+; 16 Bit Multiplication
+
+data segment 
+a dw 1234h 
+b dw 5678h 
+c dd ? 
+data ends
+code segment 
+assume ds:data, cs:code 
+start: mov ax,data 
+mov ds,ax 
+mov ax,a 
+mov bx,b 
+mul bx 
+mov word ptr c,ax 
+mov word ptr c+2,dx 
+int 3 
+code ends
+end start
+
+; 32 Bit Multiplication
+
+data segment 
+abc dd 12345678H 
+def dd 12345678H 
+ghi dq ?
+data ends 
+code segment 
+assume cs:code, ds:data 
+start: mov ax, data 
+mov ds, ax 
+mov ax, word ptr abc 
+mul word ptr def 
+mov word ptr ghi, ax 
+mov cx, dx mov ax, word ptr abc+2 
+mul word ptr def 
+add cx, ax 
+mov bx, dx 
+jnc move 
+add bx,0001H 
+move: mov ax,word ptr abc 
+mul word ptr def+2 
+add cx, ax 
+mov word ptr ghi+2, cx 
+mov cx,dx
+jnc ma 
+add bx, 0001H 
+ma: mov ax, word ptr abc+2 
+mul word ptr def+2 
+add cx, ax
+jnc mb 
+add dx, 0001H 
+mb: add cx, bx 
+mov word ptr ghi+4, cx
+jnc mc 
+add dx, 0001H 
+mc: mov word ptr ghi+6, dx 
+int 3 
+code ends
+end start
