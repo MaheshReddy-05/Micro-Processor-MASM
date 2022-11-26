@@ -1,0 +1,42 @@
+.model small
+.data 
+arr dw 0111h,0112h,0113h,0114h,0115h 
+len dw ($-arr)/2 
+key equ 0110h 
+msg1 db "key is found at" 
+res db "position", 13,10 
+msg2 db "key not found"
+.code
+start: 
+mov ax,@data 
+mov ds,ax 
+mov bx,00 
+mov dx,len 
+mov cx,key
+again: cmp bx,dx 
+ja fail 
+mov ax,bx 
+add ax,dx
+shr ax,1
+mov si,ax 
+add si,si 
+cmp cx,arr[si] 
+jae big 
+dec ax 
+mov dx,ax 
+jmp again
+big: je success
+inc ax 
+mov bx,ax 
+jmp again
+success: add al,01 
+add al,0 
+mov res,al
+lea dx,msg1 
+jmp disp 
+fail: lea dx,msg2
+disp: mov ah,09h 
+int 21h 
+mov ah,4ch
+int 21h
+end start
