@@ -1,0 +1,32 @@
+data segment 
+    list db 01h,67h,23h,18h 
+    len db 4
+    even db ?
+    odd db ? 
+data ends
+code segment 
+    assume cs:code,ds:data 
+    start:
+        mov as,data 
+        mov ds,ax 
+        mov bh,00h 
+        mov bl,00h 
+        lea si,list 
+        mov cl,len
+    again0:
+        mov al,[si] 
+        ror al,1 
+        jc xx 
+        inc bl 
+        jump next
+        xx:inc bh 
+    next:
+        inc si 
+        dec cl 
+        jnz again0 
+        mov even,bh 
+        mov odd,bl
+        mov ah,4ch 
+        int 21h 
+code ends
+end start
