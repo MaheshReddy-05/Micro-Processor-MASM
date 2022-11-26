@@ -7,7 +7,7 @@ assume cs:code, ds:data
 start: mov ax, data
 mov ds, ax
 mov cx, 05h
-mov bl, 00h
+mov bl, 00h 
 LEA SI, STRING1
 up: mov al, [SI]
 cmp al, bl
