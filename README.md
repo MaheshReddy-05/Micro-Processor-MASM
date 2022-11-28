@@ -9,3 +9,5 @@ jge  -> jump if greater or equal to j
 le   -> jump if lesser or equal to   
 shr  -> shift right or we can say dividing by 2  
 shl  -> shift left or we can say multiple by   
+
+#Not yet done hit u back with many more programs 
