@@ -8,4 +8,4 @@ MOV AX, 4261H
 SUB AX, 1234H
 HLT
 CODE ENDS
-END
+END ;Assembly Directives
