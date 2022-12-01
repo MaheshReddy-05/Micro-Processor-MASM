@@ -1,0 +1,26 @@
+.MODEL SMALL 
+.STACK 100H 
+.DATA 
+STR1 DB "Atharva$" 
+LEN DB 0 
+.CODE 
+MOV AX , @DATA ; Initializing Data Segment 
+MOV DS , AX 
+MOV SI , OFFSET STR1 
+UP: 
+MOV AL , [SI] 
+CMP AL , '$' 
+JZ DN ; IF DESTINATION == SOURCE THEN ZF = 1
+INC LEN 
+INC SI 
+LOOP UP
+DN: 
+; Printing length 
+MOV DL , LEN 
+ADD DL , 48 
+MOV AH , 2 
+INT 21H
+
+MOV AH , 4CH ; Service Routine for Exit 
+INT 21H
+END
