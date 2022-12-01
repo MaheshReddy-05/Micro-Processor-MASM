@@ -1,0 +1,38 @@
+.MODEL SMALL 
+.STACK 100H 
+.DATA 
+STR1 DB 'CODING $' 
+STR2 DB 'ATHARVA$' 
+L1 DB 0 
+L2 DB 0 
+.CODE 
+MOV AX , @DATA ; Initializing Data Segment 
+MOV DS , AX
+
+; Finding Length of STR1 
+MOV DI , OFFSET STR1
+UP1: 
+MOV AL , [DI] 
+CMP AL , '$' 
+JE DN1 
+INC DI 
+INC L1 
+JMP UP1 
+DN1: ; Concating STR1 and STR2
+LEA SI , STR2 ; Loading Effective Address i.e Base Address of STR2
+UP: 
+MOV AL , [SI] 
+MOV [DI] , AL 
+CMP AL , '$' 
+JE DN 
+INC SI 
+INC DI 
+JMP UP
+DN:
+; Printing String After Concatination 
+MOV AH , 09H 
+LEA DX , STR1 
+INT 21H 
+MOV AH , 4CH ; Service routine for exit 
+INT 21H
+END
