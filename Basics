@@ -1,0 +1,113 @@
+MOV AX, 1234H
+MOV BX, 0276H                                  
+    D, S
+ADD BX, AX   14 AA   ( D + S)                
+     
+     
+MOV AX, 0F2F4H
+MOV BX, 0F27EH                                  
+ADD BX, AX   1 E5 72                           
+ 
+MOV AX, 0F2F4H
+MOV BX, 0F27EH                                
+ADC BX, AX    E5 73                           
+
+MOV [0001H], 0F2F4H
+MOV BX, 0F27EH                                                                                        
+ADD [0001H],BX  1 E5 72                         
+
+MOV AX, 0F2F4H
+MOV BX, 0F27EH    
+     SET carry flag to '1'
+ADC BX, AX   1 E5 73                          
+
+
+MOV AX, 0F127H       
+MOV BX, 0583H                 
+ADD AX, BX
+DAA                                              
+
+
+MOV AX, 3410H
+MOV BX, 0F27EH                                 
+ 
+SUB BX,AX   ( D - S)    BE 6E                
+SUB AX,BX   ( D - S)  1 41 92                 
+SBB AX,BX   ( D - S)   41 91                
+
+MOV AL,42H                                                       
+MOV BH,1AH
+MUL BH   E6 A8 (MUL reg / mem )                    
+
+MOV AL,02FH                                                       
+MOV BH,02H
+MUL BH   01 FE                                      
+IMUL BH   FF FE
+
+MOV AL,0FFH                                                       
+MOV BH,02FH
+INC BH   03                                      
+DEC AL   FE                                        
+CMP AL, BH                                        
+CMP BH, AL                                    
+
+AND AL,BH  02 AL  0000 0011
+OR AL, BH  03     0000 0011
+XOR AL,BH  00
+
+LOOP LABEL
+MOV AX, 0002H 
+MOV BX, 0001H
+MOV CX, 03H
+ABC : ADD AX, BX 
+LOOP ABC
+HLT
+
+PUSH AX store data onto stack (SP = SP-2)
+POP BX retrive data from stack (SP = SP+2)
+
+MOV AX, 0002H 
+MOV BX, 00FFH
+
+PUSH AX
+PUSH BX
+POP CX 
+HLT
+
+Unconditional Jump ( JMP LABEL )
+
+MOV AX, 0002H 
+MOV BX, 00FFH 
+JMP ABC
+MOV CX, 0002H 
+ABC:MOV DX, 00FFH 
+
+
+Conditional Jump ( JCC LABEL )
+  CC -- NZ, Z, C, BE, BA, G, L 
+
+MOV AX, 00FFH 
+MOV BX, 003FH 
+XOR AX, BX
+JZ ABC
+MOV CX, 0002H
+HLT
+ 
+ABC:MOV DX, 2345H 
+HLT    
+
+MOV AX, 0200H
+MOV DS,AX
+
+MOV AX,0300H
+MOV ES, AX
+
+MOV DS:[0000], 52H
+MOV DS:[0001], 72H
+MOV DS:[0002], 8AH
+
+MOVSB
+MOVSB
+MOVSB
+
+HLT
