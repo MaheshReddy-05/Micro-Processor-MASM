@@ -1,21 +1,23 @@
-Data segment 
-    n dw 4 
-    res dw ? 
+Data segment
+    n dw 0004
+    ans dw ?
 Data ends
-Code segment 
-    assume cs:code,ds:data 
+Code Segment
+    assume cs:code,ds:data
     start:
-    mov ax,data 
-    mov ds,ax 
-    mov ax,n 
-    mov cx,ax
-    dec cx
+    mov ax, data
+    mov ds, ax
+    mov ax,0001 
+    
+    mov cx,n
     loop:
-    mul cx 
-    dec cx 
-    jnz loop 
-    mov res,ax 
-    mov ah,4ch 
-    int 21h
+    mul cx
+    dec cx
+    jnz loop
+    
+    
+    mov ans, ax
+    mov ah, 4ch
+    int 21h    
 Code ends
 end start
